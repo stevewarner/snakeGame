@@ -1,0 +1,52 @@
+body {
+    background: #FEFAFB;
+    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
+    font-family: 'Roboto', sans-serif;
+    font-weight: 300;
+    margin: 0 20px;
+    padding: 0;
+    display: flex;
+    flex-flow: row wrap;
+    color: #000;
+    
+
+}
+
+h1 {
+    font-family: 'Shrikhand', cursive;
+    font-size: 2.8em;
+}
+
+h4 {
+    font-weight: 100;
+    font-size: 1.2em;
+}
+
+h1, h2, h3, h4, p {
+    margin: 0 0 .5em 0;
+}
+
+#main {
+    flex: 1 1 auto;
+    padding: 40px 0;
+}
+
+canvas {
+    margin: 0 auto;
+    display: block;
+}
+
+#sidebar {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 30%;
+    padding: 40px;
+    order: 2;
+}
+
+#gameover-message {
+    position: absolute;
+    top: 0;
+    padding: 40px;
+    color: #fff;
+}
