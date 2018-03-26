@@ -1,20 +1,22 @@
-var snek;
+var snake;
 var scl = 20;
 var score = 0;
+var difficulty = 10;
+var highScore = 0;
 
 var food;
+var textColorButton;
 
 function setup() {
   var canvas = createCanvas(600,600);
   canvas.parent('main');
-  snek = new Snake();
-  frameRate(10);
+  snake = new Snake();
+  frameRate(difficulty);
   pickLocation();
 
-
 // load audio
-let audio = new Audio();
-audio.src = "funkyWorm.mp3";
+//let audio = new Audio();
+//audio.src = "funkyWorm.mp3";
 //audio.play();
 }
 
@@ -28,17 +30,18 @@ function pickLocation() {
 function draw() {
   background(0);
 
-  if (snek.eat(food)) {
+  if (snake.eat(food)) {
     score++;
-    console.log(score);
+    highScore++;
     pickLocation();
   }
 
-  snek.death();
-  snek.update();
-  snek.show();
+  snake.death();
+  snake.update();
+  snake.show();
 
-  fill(255, 0, 100);
+  fill(255,0,100);
+  //fill(color(random(255), random(255), random(255)));
   noStroke();
   rect(food.x, food.y, scl, scl);
 
@@ -55,28 +58,28 @@ function keyPressed() {
       alert('hi');
       break;
     case UP_ARROW:
-      snek.dir(0,-1);
+      snake.dir(0,-1);
       break;
     case DOWN_ARROW:
-      snek.dir(0,1);
+      snake.dir(0,1);
       break;
     case LEFT_ARROW:
-      snek.dir(-1,0);
+      snake.dir(-1,0);
       break;
     case RIGHT_ARROW:
-      snek.dir(1,0);
+      snake.dir(1,0);
       break;
     case 87:
-      snek.dir(0,-1);
+      snake.dir(0,-1);
       break;
     case 83:
-      snek.dir(0,1);
+      snake.dir(0,1);
       break;
     case 65:
-      snek.dir(-1,0);
+      snake.dir(-1,0);
       break;
     case 68:
-      snek.dir(1,0);
+      snake.dir(1,0);
       break;
   }
 
@@ -87,13 +90,18 @@ function gameover() {
   noStroke();
   textAlign(CENTER);
   textSize(20);
-  text("Game over \nScore: " + score + "\nPlay again?", 300, 200);
+  text("Game over \nScore: " + score + "\nHigh Score: " + highScore + "\nPlay again?", 300, 200);
   score = 0;
+  //button
+  textColorButton = createButton('Change Color');
+  textColorButton.position(25, 25);
+  textColorButton.mousePressed(restart); 
   //restart();
-  document.getElementById("").addEventListener("click", restart);
+  //document.getElementById("main").addEventListener("click", restart);
 }
 
 function restart() {
-  window.location.reload();
+  alert('hey');
+  //window.location.reload();
 }
 

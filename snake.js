@@ -5,11 +5,13 @@ function Snake () {
     this.yspeed = 0;
     this.total = 1;
     this.tail = [];
+    this.color = 255;
 
     this.eat = function(pos) {
         var d = dist(this.x, this.y, pos.x, pos.y);
         if (d < 1) {
             this.total++;
+            this.color = color(random(255), random(255), random(255));
             return true;
         }   
     }
@@ -52,7 +54,7 @@ function Snake () {
     }
   
     this.show = function() {
-        fill(255);
+        fill(snake.color);
         noStroke();
         for (var i = 0; i < this.tail.length; i++) {
           rect(this.tail[i].x, this.tail[i].y, scl, scl);
