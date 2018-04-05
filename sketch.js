@@ -1,107 +1,83 @@
-var snake;
+var canvasWidth = 600;
+var canvasHeight = 600;
 var scl = 20;
+
+var snake;
+var food;
+
 var score = 0;
 var difficulty = 10;
-var highScore = 0;
-
-var food;
-var textColorButton;
 
 function setup() {
-  var canvas = createCanvas(600,600);
+  document.querySelector(".endgame").style.display = "none";
+  score = 0;
+  var canvas = createCanvas(canvasWidth, canvasHeight);
   canvas.parent('main');
-  snake = new Snake();
-  frameRate(difficulty);
-  pickLocation();
+	frameRate(difficulty);
 
+	snake = new Snake();
+	food = createVector(0,0);
+
+  createFood();
+
+  draw();
+  loop();
+  
 // load audio
 //let audio = new Audio();
 //audio.src = "funkyWorm.mp3";
 //audio.play();
 }
 
-function pickLocation() {
-  var col = floor(width/scl);
-  var row = floor(height/scl);
-  food = createVector(floor(random(col)), floor(random(row)));
-  food.mult(scl);
-}
-
 function draw() {
-  background(0);
+	background(51);
+	fill(255,0,100);
+	rect(food.x, food.y, scl, scl);
 
-  if (snake.eat(food)) {
-    score++;
-    highScore++;
-    pickLocation();
-  }
+	snake.draw();
 
-  snake.death();
-  snake.update();
-  snake.show();
-
-  fill(255,0,100);
-  //fill(color(random(255), random(255), random(255)));
-  noStroke();
-  rect(food.x, food.y, scl, scl);
-
+  update();
+  
   fill(255);
-  noStroke();
+  //noStroke();
   textSize(18);
   text("Score: "+ score, 500, 560);
+}
 
+function update() {
+	snake.update();
+
+	if (snake.eats(food)) {
+		createFood();
+	}
 }
 
 function keyPressed() {
-  switch(keyCode) {
-    case 27:
-      alert('hi');
-      break;
-    case UP_ARROW:
-      snake.dir(0,-1);
-      break;
-    case DOWN_ARROW:
-      snake.dir(0,1);
-      break;
-    case LEFT_ARROW:
-      snake.dir(-1,0);
-      break;
-    case RIGHT_ARROW:
-      snake.dir(1,0);
-      break;
-    case 87:
-      snake.dir(0,-1);
-      break;
-    case 83:
-      snake.dir(0,1);
-      break;
-    case 65:
-      snake.dir(-1,0);
-      break;
-    case 68:
-      snake.dir(1,0);
-      break;
-  }
+	if(keyCode == LEFT_ARROW || keyCode == 65) {
+		snake.moveOnX(-1);
+	}
+	else if (keyCode == RIGHT_ARROW || keyCode == 68) {
+		snake.moveOnX(1);
+	}
+	else if (keyCode == UP_ARROW || keyCode == 87) {
+		snake.moveOnY(-1);
+	}
+	else if (keyCode == DOWN_ARROW || keyCode == 83) {
+		snake.moveOnY(1);
+	}
+}
 
+function createFood() {
+	var x = floor(random(0, floor(canvasWidth/scl))) * scl;
+	var y = floor(random(0, floor(canvasHeight/scl))) * scl;
+
+	food.x = x;
+	food.y = y;
 }
 
 function gameover() {
-  fill(255);
-  noStroke();
-  textAlign(CENTER);
-  textSize(20);
-  text("Game over \nScore: " + score + "\nHigh Score: " + highScore + "\nPlay again?", 300, 200);
+  document.querySelector(".endgame").style.display = "block";
   score = 0;
-  //button
-  textColorButton = createButton('Change Color');
-  textColorButton.position(25, 25);
-  textColorButton.mousePressed(restart); 
-  //restart();
-  //document.getElementById("main").addEventListener("click", restart);
-}
-
-function restart() {
-  alert('hey');
-  //window.location.reload();
+  noLoop();
 }
 

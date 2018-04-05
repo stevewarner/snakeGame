@@ -4,7 +4,7 @@ body {
     font-family: 'Roboto', sans-serif;
     font-weight: 300;
     margin: 0 20px;
-    padding: 0;
+    padding: 40px 0;
     display: flex;
     flex-flow: row wrap;
     color: #000;
@@ -27,8 +27,11 @@ h1, h2, h3, h4, p {
 }
 
 #main {
+    display: flex;
     flex: 1 1 auto;
-    padding: 40px 0;
+    padding: 0;
+    justify-content: center;
+    align-items: center;
 }
 
 canvas {
@@ -50,3 +53,32 @@ canvas {
     padding: 40px;
     color: #fff;
 }
+
+.endgame {
+    display: none;
+    position: absolute;
+    border: 10px solid #000;
+    border-radius: 5px;
+    background: #fff;
+    color: #000;
+    padding: 20px;
+    margin: auto 0;
+    text-align: center;
+    letter-spacing: .3em;
+  }
+  
+  .endgame * {
+    text-transform: uppercase;
+    margin: 0 0 20px 0;
+  }
+  
+  .endgame button {
+    margin: 0;
+    padding: 10px;
+    background: #000;
+    border: none;
+    border-radius: 5px;
+    font-size: 18px;
+    cursor: pointer;
+    color: #fff;
+  }

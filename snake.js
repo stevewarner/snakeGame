@@ -1,65 +1,75 @@
 function Snake () {
+    // start in top left 0, 0
     this.x = 0;
     this.y = 0;
-    this.xspeed = 1;
-    this.yspeed = 0;
-    this.total = 1;
-    this.tail = [];
+
+    this.head = createVector(this.x, this.y, 0);
+
+	this.body = [];
+    this.body.push(this.head);
+    
+    this.speed = createVector(1,0);
     this.color = 255;
 
-    this.eat = function(pos) {
-        var d = dist(this.x, this.y, pos.x, pos.y);
-        if (d < 1) {
-            this.total++;
-            this.color = color(random(255), random(255), random(255));
-            return true;
-        }   
+    this.draw = function() {
+		for (var i = 0; i < this.body.length; i++) {
+            fill(this.color);
+			rect(this.body[i].x, this.body[i].y, scl, scl);
+		}
     }
-
-    this.dir = function(x, y) {
-        this.xspeed = x;
-        this.yspeed = y;
-    }
-
-    this.death = function() {
-        for (var i = 0; i < this.tail.length; i++) {
-            var pos = this.tail[i];
-            var d = dist(this.x, this.y, pos.x, pos.y);
-            if (d < 1 || this.x < 0 || this.x > 600 || this.y < 0 || this.y > 600) {
-                //game over and high score
-                
-                //alert('game over \nhighscore: ' + score);
-                gameover();
-                //Reset
-                //restart();
-                this.total = 0;
-                this.tail = [];
-            }
-        }
-    }
-  
+    
     this.update = function() {
-        if (this.total === this.tail.length) {
-            for (var i = 0; i < this.tail.length-1; i++) {
-                this.tail[i] = this.tail[i+1];
-            }
-        }
-        this.tail[this.total-1] = createVector(this.x, this.y);
+		// move body of snake
+		for (var i = this.body.length - 1; i >= 1; i--) {
+			this.body[i].x = this.body[i - 1].x;
+			this.body[i].y = this.body[i - 1].y;
+		}
 
-        this.x = this.x + this.xspeed*scl;
-        this.y = this.y + this.yspeed*scl;
+		// move head of snake
+		this.head.x += this.speed.x * scl;
+		this.head.y += this.speed.y * scl;
 
-        this.x = constrain(this.x, 0, width-scl);
-        this.y = constrain(this.y, 0, height-scl);
+		this.head.x = constrain(this.head.x, 0, width - scl);
+		this.head.y = constrain(this.head.y, 0, width - scl);
+
+		// check if dead
+		for (var i = 1; i < this.body.length; i++) {
+			if (this.head.x === this.body[i].x && this.head.y === this.body[i].y) {
+				//reset tail
+				this.body = [];
+				this.body.push(this.head);
+                //game over
+                gameover();
+			}
+		}
     }
-  
-    this.show = function() {
-        fill(snake.color);
-        noStroke();
-        for (var i = 0; i < this.tail.length; i++) {
-          rect(this.tail[i].x, this.tail[i].y, scl, scl);
-        }
-        rect(this.x, this.y, scl, scl);
-      }    
+    
+   // Controls
+	this.moveOnX = function(dir) {
+		if (dir * this.speed.x < 0) return;
+		this.speed.x = dir;
+		this.speed.y = 0;
+	}
 
+	this.moveOnY = function(dir) {
+		if (dir * this.speed.y < 0) return;
+		this.speed.x = 0;
+		this.speed.y = dir;
+	}
+
+	this.eats = function(food) {
+		if (food.x === this.head.x && food.y === this.head.y) {
+			this.addToTail();
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	this.addToTail = function() {
+		var lastTailElement = this.body[this.body.length - 1];
+        this.body.push(createVector(lastTailElement.x, lastTailElement.y, 0));
+        score++;
+	}
+	//
 }
