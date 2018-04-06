@@ -11,8 +11,17 @@
     <div id="main">
         <div class="endgame">
             <h1>game over</h1>
-            <p class="text"></p>
+            <h3 id="score"></h3>
+            <span>
+                <button onclick="selectDifficulty(10)">Slow</button>
+                <button onclick="selectDifficulty(15)">Medium</button>
+                <button onclick="selectDifficulty(20)">Fast</button>
+            </span>
             <button onclick="setup()">Play again?</button>
+        </div>
+
+        <div class="pause-screen">
+            <h3>paused</h3>
         </div>
 
     </div>

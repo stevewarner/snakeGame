@@ -8,6 +8,8 @@ var food;
 var score = 0;
 var difficulty = 10;
 
+var paused = false;
+
 function setup() {
   document.querySelector(".endgame").style.display = "none";
   score = 0;
@@ -64,6 +66,18 @@ function keyPressed() {
 	}
 	else if (keyCode == DOWN_ARROW || keyCode == 83) {
 		snake.moveOnY(1);
+  }
+  else if (keyCode == 27) {
+    if (!paused) {
+      document.querySelector(".pause-screen").style.display = "flex";
+      noLoop();
+      paused = true;
+    } else {
+      document.querySelector(".pause-screen").style.display = "none";
+      loop();
+      paused = false;
+    }
+    
 	}
 }
 
@@ -76,8 +90,17 @@ function createFood() {
 }
 
 function gameover() {
-  document.querySelector(".endgame").style.display = "block";
+  // gameover screen
+  document.querySelector(".endgame").style.display = "flex";
+  // add score to gameover screen
+  document.getElementById("score").innerHTML = "Score: " + score;
   score = 0;
   noLoop();
 }
 
+function selectDifficulty(x) {
+  // add css class select-difficulty
+  
+  //set difficulty to x
+  difficulty = x;
+}
