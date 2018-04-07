@@ -98,14 +98,14 @@ canvas {
     color: #000;
   }
 
-  .endgame span button:hover {
+  /* .endgame span button:hover {
       background: #000;
       color: #fff;
-  }
+  } */
 
   .difficulty-select {
-    background: #000;
-    color: #fff;
+    background: #000 !important;
+    color: #fff !important;
   }
 
   .pause-screen {

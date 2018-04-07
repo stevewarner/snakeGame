@@ -10,7 +10,12 @@ var difficulty = 10;
 
 var paused = false;
 
+const buttons = document.querySelectorAll('.select');
+
 function setup() {
+  // reset difficulty select buttons
+  buttons.forEach(button => resetButton(button));
+  
   document.querySelector(".endgame").style.display = "none";
   score = 0;
   var canvas = createCanvas(canvasWidth, canvasHeight);
@@ -96,11 +101,22 @@ function gameover() {
   document.getElementById("score").innerHTML = "Score: " + score;
   score = 0;
   noLoop();
+  //listen for button click to select difficulty
+  buttons.forEach(button => button.addEventListener('click', selectDifficulty));
 }
 
-function selectDifficulty(x) {
-  // add css class select-difficulty
-  
-  //set difficulty to x
-  difficulty = x;
+function selectDifficulty() {
+  // reset difficulty select buttons
+  buttons.forEach(button => resetButton(button));
+  // selected button style
+  this.style.backgroundColor = "black";
+  this.style.color = "white";
+  // set difficulty
+  difficulty = Number(this.id);
 }
+
+function resetButton(button) {
+  button.style.backgroundColor = "white";
+  button.style.color = "black";
+}
+
